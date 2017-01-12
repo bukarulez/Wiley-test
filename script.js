@@ -8,7 +8,8 @@ var storage = localStorage.getItem('toDoList') ? angular.fromJson(localStorage.g
 var toDoApp = angular.module('toDoApp', []);
 function saveStorage() {
     localStorage.setItem('toDoList', angular.toJson(storage));
-};
+}
+
 toDoApp.controller('ToDoCtrl', ['$scope', function ($scope) {
 
     $scope.orderProperty = 'id';
@@ -44,29 +45,53 @@ toDoApp.controller('ToDoCtrl', ['$scope', function ($scope) {
     var toDoList = this;
     toDoList.todo = storage;
 }]);
-
+toDoApp.directive('onEsc', function () {
+    return function ($scope, element, attr) {
+        element.bind('keydown', function (e) {
+            if (e.keyCode === 27) {
+                $scope.$apply(attr.onEsc);
+            }
+        });
+    };
+});
 
 toDoApp.directive('editAtPlace', function () {
     return {
         restrict: 'E',
         scope: {value: '='},
-        template: '<span ng-click="edit()" ng-bind="value"></span><input style="max-height: 22px;" ng-model="value">',
+        template: '<span  ng-click="edit()" ng-bind="value"></span><input style="max-height: 22px;" ng-model="value">',
         link: function ($scope, element) {
             var inputElement = angular.element(element.children()[1]);
-
+            var self = this;
             element.addClass('edit-at-place');
             $scope.editing = false;
 
             $scope.edit = function () {
+                $scope.lastValue = this.value;
                 $scope.editing = true;
                 element.addClass('active');
                 inputElement[0].focus();
             };
-
-            inputElement.prop('onblur', function () {
+            function endEdit(save) {
                 $scope.editing = false;
                 element.removeClass('active');
-                saveStorage();
+                if (save) {
+                    saveStorage();
+                }else {
+                    $scope.value = $scope.lastValue;
+                }
+            }
+
+            inputElement.prop('onkeydown', function (event) {
+                if (event.which == 13) {
+                    endEdit(true);
+                }
+                if (event.which == 27) {
+                    endEdit(false);
+                }
+            });
+            inputElement.prop('onblur', function () {
+                endEdit(true);
             });
         }
     };
