@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>ToDo list</title>
+</head>
+<body ng-app="toDoApp" ng-controller="ToDoCtrl as tdc">
+<header>
+    <h1 class="main-caption">ToDo list</h1>
+    <hr>
+</header>
+<section class="add-item container">
+    <form ng-submit="add()" class="row">
+        <div class="col-md-4 col-xs-4"><input id="title" class="form-control" ng-model="title" required type="text"
+                                              placeholder="Title" autofocus></div>
+        <div class="col-md-7 col-xs-6"><input class="form-control" ng-model="task" required type="text"
+                                              placeholder="Task description"></div>
+        <div class="col-md-1 col-xs-2 "><input class="btn btn-default" type="submit" title="Add new task" value="Add">
+        </div>
+    </form>
+</section>
+<section ng-if="tdc.todo.length" class="container">
+    <div class="row">
+        <div class="panel-body col-xs-1 table-caption" ng-click="sortOrder('done')" title="Sort by done">Done</div>
+        <div class="panel-body col-md-3 col-xs-3 table-caption" ng-click="sortOrder('title')" title="Sort by title">
+            Title
+        </div>
+        <div class="panel-body col-md-7 col-xs-6 table-caption" ng-click="sortOrder('task')"
+             title="Sort by description">Description
+        </div>
+        <div class="col-md-1 col-xs-2 "><span class="glyphicon add-order"
+                                              ng-class="!reverse ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"
+                                              ng-click="sortOrder('id')" title="Add order"></span></div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="row panel" ng-class="todo.done ? 'panel-success light-green-bg' : 'panel-default'"
+         ng-repeat="todo in tdc.todo | orderBy:orderProperty:reverse">
+        <div class="panel-body col-xs-1"><input type="checkbox" ng-model="todo.done" ng-click="saveStorage()"></div>
+        <edit-at-place class="panel-body col-md-3 col-xs-3 ellipsis" title="{{todo.title}}" value="todo.title">
+            {{todo.title}}
+        </edit-at-place>
+        <edit-at-place class="panel-body col-md-7 col-xs-6 ellipsis" title="{{todo.task}}" value="todo.task">
+            {{todo.task}}
+        </edit-at-place>
+        <div class="col-md-1 col-xs-2 "><input id="{{todo.id}}" class="btn remove-btn" type="button"
+                                               title="Remove task from list"
+                                               value="Remove" ng-click="remove()"></div>
+    </div>
+</section>
+
+<footer></footer>
+</body>
+</html>

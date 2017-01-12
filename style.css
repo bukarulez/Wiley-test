@@ -1,0 +1,49 @@
+.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.main-caption {
+    text-align: center;
+}
+
+.panel.light-green-bg {
+    background-color: #e5ffe5;
+}
+
+.btn.remove-btn {
+    margin-top: 10px;
+    float: right;
+}
+
+.table-caption:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: gray;
+}
+
+.add-order {
+    padding: 16px;
+}
+
+.add-order:hover {
+    cursor: pointer;
+    color: gray;
+}
+
+.edit-at-place span {
+    cursor: pointer;
+}
+
+.edit-at-place input {
+    display: none;
+}
+
+.edit-at-place.active span {
+    display: none;
+}
+
+.edit-at-place.active input {
+    display: inline-block;
+}
