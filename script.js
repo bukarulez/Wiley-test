@@ -45,21 +45,13 @@ toDoApp.controller('ToDoCtrl', ['$scope', function ($scope) {
     var toDoList = this;
     toDoList.todo = storage;
 }]);
-toDoApp.directive('onEsc', function () {
-    return function ($scope, element, attr) {
-        element.bind('keydown', function (e) {
-            if (e.keyCode === 27) {
-                $scope.$apply(attr.onEsc);
-            }
-        });
-    };
-});
+
 
 toDoApp.directive('editAtPlace', function () {
     return {
         restrict: 'E',
-        scope: {value: '='},
-        template: '<span  ng-click="edit()" ng-bind="value"></span><input style="max-height: 22px;" ng-model="value">',
+        scope: {value: '=value'},
+        template: '<span style="padding-left: 10px" ng-click="edit()" ng-bind="value"></span><input style="max-height: 22px;" ng-model="value">',
         link: function ($scope, element) {
             var inputElement = angular.element(element.children()[1]);
             var self = this;
@@ -79,6 +71,7 @@ toDoApp.directive('editAtPlace', function () {
                     saveStorage();
                 }else {
                     $scope.value = $scope.lastValue;
+                    $scope.$apply();
                 }
             }
 

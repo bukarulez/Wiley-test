@@ -25,12 +25,15 @@
 </section>
 <section ng-if="tdc.todo.length" class="container">
     <div class="row">
-        <div class="panel-body col-xs-1 table-caption" ng-click="sortOrder('done')" title="Sort by done">Done</div>
-        <div class="panel-body col-md-3 col-xs-3 table-caption" ng-click="sortOrder('title')" title="Sort by title">
+        <div class="panel-body col-xs-1 table-caption" ng-class="{'active-caption': orderProperty=='done'}"
+             ng-click="sortOrder('done')" title="Sort by done">Done
+        </div>
+        <div class="panel-body col-md-3 col-xs-3 table-caption" ng-class="{'active-caption': orderProperty=='title'}"
+             ng-click="sortOrder('title')" title="Sort by title">
             Title
         </div>
-        <div class="panel-body col-md-7 col-xs-6 table-caption" ng-click="sortOrder('task')"
-             title="Sort by description">Description
+        <div class="panel-body col-md-7 col-xs-6 table-caption" ng-class="{'active-caption': orderProperty=='task'}"
+             ng-click="sortOrder('task')" title="Sort by description">Description
         </div>
         <div class="col-md-1 col-xs-2 "><span class="glyphicon add-order"
                                               ng-class="!reverse ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"

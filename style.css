@@ -47,3 +47,11 @@
 .edit-at-place.active input {
     display: inline-block;
 }
+
+.active-caption{
+    color: blue;
+}
+
+.active-caption:hover{
+    color: blue;
+}
